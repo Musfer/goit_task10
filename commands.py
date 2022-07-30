@@ -26,6 +26,7 @@ def def_mod(string: str):
             "close": "bye",
             "exit": "bye",
             "add contact": "add_contact",
+            "add phone number": "add_number",
             "add phone": "add_number",
             "add number": "add_number",
             "add": "add_contact",

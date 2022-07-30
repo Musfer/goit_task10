@@ -30,6 +30,7 @@ class Record:
         for x in self.phones:
             if x.value == number.value:
                 self.phones.remove(x)
+        #print(self.phones)
 
 
 class AddressBook(UserDict):

@@ -11,7 +11,7 @@ def confirm(question):
         string = input(question)
         if string.strip().lower() in ("y", "yes"):
             return True
-        if question.strip().lower() in ("y", "yes"):
+        if string.strip().lower() in ("n", "no"):
             return False
 
 
@@ -39,15 +39,17 @@ def add_contact(book: AddressBook, data: str):
     else:
         record = Record(Name(name), [Phone(number)])
         book.add_record(record)
-        print(f"Created contact {name}: {number}")
+        print(f"Created contact '{name}': '{number}'")
 
 
 def show_all(book: AddressBook, *_):
     if not book.data:
         print("Your phone book is empty.")
     else:
-        for name, phones in book.data.items():
-            print(f"{name}: {', '.join([x.value for x in phones.phones])}")
+        for name in book.data.keys():
+            print(f"{name}: {', '.join([x.value for x in book.data.get(name).phones])}")
+        # for name, phones in book.data.items():
+        #     print(f"{name}: {', '.join([x.value for x in phones.phones])}")
 
 
 def phone(book: AddressBook, data: str):
@@ -55,9 +57,9 @@ def phone(book: AddressBook, data: str):
     if not name:
         print("Sorry, I can't identify a contact's name")
     if name not in book.data.keys():
-        print(f"Contact {name} has not been found in your contacts")
+        print(f"Contact '{name}' is not in your contacts")
     else:
-        print(f"{name}: {', '.join([x.value for x in book.data[name]])}")
+        print(f"{name}: {', '.join([x.value for x in book.data.get(name).phones])}")
 
 
 def add_number(book: AddressBook, data: str):
@@ -68,10 +70,10 @@ def add_number(book: AddressBook, data: str):
         print(no_number)
     elif name not in book.data.keys():
         add_contact(book, data)
-        print(f"Created a new contact {name} with number {number}'")
+        print(f"Created a new contact '{name}' with number '{number}'")
     else:
         book.data[name].add_number(Phone(number))
-        print(f"Number {number} has been added to contact {name}")
+        print(f"Number '{number}' has been added to contact '{name}'")
 
 
 def delete_number(book: AddressBook, data: str):
