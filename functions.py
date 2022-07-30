@@ -37,7 +37,7 @@ def add_contact(book: AddressBook, data: str):
     elif name in book.data.keys():
         print(f"Contact '{name}' already exists")
     else:
-        record = Record(Name(name), [Phone(number)])
+        record = Record(Name(name), [Phone(number)] if number else [])
         book.add_record(record)
         print(f"Created contact '{name}': '{number}'")
 
@@ -48,8 +48,6 @@ def show_all(book: AddressBook, *_):
     else:
         for name in book.data.keys():
             print(f"{name}: {', '.join([x.value for x in book.data.get(name).phones])}")
-        # for name, phones in book.data.items():
-        #     print(f"{name}: {', '.join([x.value for x in phones.phones])}")
 
 
 def phone(book: AddressBook, data: str):
@@ -81,7 +79,7 @@ def delete_number(book: AddressBook, data: str):
     if name and not number:
         if name in book.data.keys():
             if confirm(f"Do you want to delete all numbers from contact '{name}'? Type 'yes'/'no'.\n"):
-                book.data[name] = {Name(name): []}
+                book.data[name] = Record(Name(name))
                 print(f"Done!")
         else:
             print(f"Contact {name} does not exist.")

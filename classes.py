@@ -30,13 +30,13 @@ class Record:
         for x in self.phones:
             if x.value == number.value:
                 self.phones.remove(x)
-        #print(self.phones)
 
 
 class AddressBook(UserDict):
     def __init__(self):
         super().__init__()
-        self.data = {"Musfer": Record(Name("Musfer"), [Phone("+3809954396966")])}
+        self.data = {}
+        #self.data = {"Musfer": Record(Name("Musfer"), [Phone("+3809954396966")])}
 
     def add_record(self, record: Record):
         self.data[record.name.value] = record
