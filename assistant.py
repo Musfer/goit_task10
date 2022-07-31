@@ -1,5 +1,6 @@
 import classes
 from commands import commands, def_mod
+import sys
 
 
 def main():
@@ -9,7 +10,10 @@ def main():
     while True:
         command = input()
         mode, data = def_mod(command)
-        commands.get(mode)(book, data)
+        output = commands.get(mode)(book, data)
+        print(output)
+        if output == "Good bye!":
+            sys.exit()
 
 
 if __name__ == "__main__":

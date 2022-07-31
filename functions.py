@@ -33,45 +33,45 @@ def find_name(text: str):  # converts text into name. Should be used only after 
 def add_contact(book: AddressBook, data: str):
     name, number = find_name_number(data)
     if not name:
-        print(no_name)
+        return no_name
     elif name in book.data.keys():
-        print(f"Contact '{name}' already exists")
+        return f"Contact '{name}' already exists"
     else:
         record = Record(Name(name), [Phone(number)] if number else [])
         book.add_record(record)
-        print(f"Created contact '{name}': '{number}'")
+        return f"Created contact '{name}': '{number}'"
 
 
 def show_all(book: AddressBook, *_):
     if not book.data:
-        print("Your phone book is empty.")
+        return "Your phone book is empty."
     else:
         for name in book.data.keys():
-            print(f"{name}: {', '.join([x.value for x in book.data.get(name).phones])}")
+            return f"{name}: {', '.join([x.value for x in book.data.get(name).phones])}"
 
 
 def phone(book: AddressBook, data: str):
     name = find_name(data)
     if not name:
-        print("Sorry, I can't identify a contact's name")
+        return "Sorry, I can't identify a contact's name"
     if name not in book.data.keys():
-        print(f"Contact '{name}' is not in your contacts")
+        return f"Contact '{name}' is not in your contacts"
     else:
-        print(f"{name}: {', '.join([x.value for x in book.data.get(name).phones])}")
+        return f"{name}: {', '.join([x.value for x in book.data.get(name).phones])}"
 
 
 def add_number(book: AddressBook, data: str):
     name, number = find_name_number(data)
     if not name:
-        print(no_name)
+        return no_name
     elif not number:
-        print(no_number)
+        return no_number
     elif name not in book.data.keys():
         add_contact(book, data)
-        print(f"Created a new contact '{name}' with number '{number}'")
+        return f"Created a new contact '{name}' with number '{number}'"
     else:
         book.data[name].add_number(Phone(number))
-        print(f"Number '{number}' has been added to contact '{name}'")
+        return f"Number '{number}' has been added to contact '{name}'"
 
 
 def delete_number(book: AddressBook, data: str):
@@ -80,36 +80,36 @@ def delete_number(book: AddressBook, data: str):
         if name in book.data.keys():
             if confirm(f"Do you want to delete all numbers from contact '{name}'? Type 'yes'/'no'.\n"):
                 book.data[name] = Record(Name(name))
-                print(f"Done!")
+                return f"Done!"
         else:
-            print(f"Contact {name} does not exist.")
+            return f"Contact {name} does not exist."
     elif name and number:
         if name in book.data.keys():
             if number in [x.value for x in book.data.get(name).phones]:
                 book.data.get(name).del_number(Phone(number))
-                print(f"Number '{number}' has been deleted from contact '{name}'")
+                return f"Number '{number}' has been deleted from contact '{name}'"
             else:
-                print(f"Contact '{name}' has no phone number '{number}'.")
+                return f"Contact '{name}' has no phone number '{number}'."
     else:
-        print(no_name)
+        return no_name
 
 
 def delete_contact(book: AddressBook, data: str):
     name, number = find_name_number(data)
     if not name:
-        print(no_name)
+        return no_name
     elif name in book.data.keys():
         if confirm(f"Contact '{name}' will be deleted from your phone book. Are you sure? Type 'yes' or 'no'.\n"):
             book.delete_record(name)
-            print("Done!")
+            return "Done!"
 
 
 def help_me(*_):
-    print("Hi! Here is the list of known commands:")
-    print("\tshow all: shows all your contacts")
-    print("\tphone 'name': shows all phone numbers of the contact")
-    print("\tadd contact 'name' 'phone number': creates a new contact")
-    print("\tdelete contact 'name': deletes contact 'name'")
-    print("\tadd phone 'name' 'phone numer': adds the phone number to the existing contact or creates a new one")
-    print("\tdelete phone 'name' 'phone number': deletes the phone number from contact")
-    print("\texit: close the assistant")
+    return "Hi! Here is the list of known commands:\n" + \
+           "\tshow all: shows all your contacts\n" + \
+           "\tphone 'name': shows all phone numbers of the contact\n" + \
+           "\tadd contact 'name' 'phone number': creates a new contact\n" + \
+           "\tdelete contact 'name': deletes contact 'name'\n" + \
+           "\tadd phone 'name' 'phone numer': adds the phone number to the existing contact or creates a new one\n" + \
+           "\tdelete phone 'name' 'phone number': deletes the phone number from contact\n" + \
+           "\texit: close the assistant\n"

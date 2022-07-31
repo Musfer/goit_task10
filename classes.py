@@ -1,6 +1,4 @@
-class UserDict:
-    def __init__(self):
-        pass
+from collections import UserDict
 
 
 class Field:
@@ -33,10 +31,10 @@ class Record:
 
 
 class AddressBook(UserDict):
-    def __init__(self):
-        super().__init__()
-        self.data = {}
-        #self.data = {"Musfer": Record(Name("Musfer"), [Phone("+3809954396966")])}
+    # def __init__(self):
+    #     super().__init__()
+    #     self.data = UserDict
+    #     #self.data = {"Musfer": Record(Name("Musfer"), [Phone("+3809954396966")])}
 
     def add_record(self, record: Record):
         self.data[record.name.value] = record
